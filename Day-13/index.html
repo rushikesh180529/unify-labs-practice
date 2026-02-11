@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Logic Foundation Project</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="container">
+    <h1>🧮 Calculator & Magic 8-Ball</h1>
+
+    <!-- Welcome Section -->
+    <section>
+      <h2>Welcome</h2>
+      <input type="text" id="username" placeholder="Enter your name" />
+      <button onclick="showWelcome()">Show Welcome</button>
+      <p id="welcomeText"></p>
+    </section>
+
+    <!-- Calculator Section -->
+    <section>
+      <h2>Calculator</h2>
+      <input type="number" id="num1" placeholder="Enter first number" />
+      <input type="number" id="num2" placeholder="Enter second number" />
+      <button onclick="calculate()">Calculate</button>
+
+      <div class="results">
+        <p id="sum"></p>
+        <p id="product"></p>
+        <p id="remainder"></p>
+      </div>
+    </section>
+
+    <!-- Magic 8 Ball -->
+    <section>
+      <h2>Magic 8-Ball</h2>
+      <button onclick="magicBall()">Ask Question</button>
+      <p id="magicAnswer"></p>
+    </section>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
