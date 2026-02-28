@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Real-Time Weather Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app">
+  <h1>🌤 Real-Time Weather Dashboard</h1>
+
+  <div class="search">
+    <input type="text" id="cityInput" placeholder="Enter City (e.g. Mumbai)">
+    <button id="getWeatherBtn">Get Weather</button>
+  </div>
+
+  <div id="loading" class="loading" style="display:none;">
+    ⏳ Loading weather data...
+  </div>
+
+  <div id="weatherCard" class="weather-card"></div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
