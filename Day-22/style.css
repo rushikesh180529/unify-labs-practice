@@ -1,0 +1,50 @@
+body {
+  font-family: Arial;
+  margin: 0;
+  background: #f4f4f4;
+  transition: 0.3s;
+}
+
+body.dark {
+  background: #121212;
+  color: white;
+}
+
+header {
+  background: #222;
+  color: white;
+  padding: 15px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+input, select, button {
+  padding: 6px;
+}
+
+.loading, .error {
+  text-align: center;
+  padding: 10px;
+}
+
+#error {
+  color: red;
+}
+
+#container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 15px;
+  padding: 20px;
+}
+
+.card {
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+body.dark .card {
+  background: #1e1e1e;
+}
