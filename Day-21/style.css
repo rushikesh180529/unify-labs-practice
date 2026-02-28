@@ -1,0 +1,33 @@
+body {
+  font-family: Arial;
+  transition: background 0.3s, color 0.3s;
+  background: white;
+  color: black;
+  display: flex;
+  justify-content: center;
+  padding-top: 60px;
+}
+
+body.dark {
+  background: #121212;
+  color: white;
+}
+
+.app {
+  background: #f4f4f4;
+  padding: 25px;
+  width: 400px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+body.dark .app {
+  background: #1e1e1e;
+}
+
+.settings-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 20px;
+}
