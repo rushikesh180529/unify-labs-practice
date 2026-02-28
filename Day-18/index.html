@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Digital Pet Simulator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app">
+  <h1>🐾 Digital Pet Simulator</h1>
+
+  <div class="setup">
+    <input type="text" id="petName" placeholder="Pet Name">
+    <input type="text" id="petType" placeholder="Pet Type (Dog/Cat)">
+    <button onclick="createPet()">Create Pet</button>
+  </div>
+
+  <div class="controls" style="display:none;" id="controls">
+    <button onclick="feedPet()">Feed 🍖</button>
+    <button onclick="playPet()">Play 🎾</button>
+    <button onclick="showStatus()">Get Status 📊</button>
+  </div>
+
+  <div class="output">
+    <pre id="output"></pre>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
