@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>TITAN Marketplace</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<header>
+  <h1>🛒 TITAN</h1>
+  <input id="search" placeholder="Search products...">
+</header>
+
+<section id="catalog" class="grid"></section>
+
+<div class="cart-panel">
+  <h2>🛍️ Cart</h2>
+  <div id="cartItems"></div>
+  <p><b>Total: ₹<span id="total">0</span></b></p>
+
+  <h3>Checkout</h3>
+  <input id="name" placeholder="Full Name">
+  <input id="email" placeholder="Email">
+  <input id="address" placeholder="Address">
+  <button onclick="checkout()">Place Order</button>
+</div>
+
+<script>
+let products = [];
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+async function fetchProducts() {
+  const res = await fetch("/api/products");
+  products = await res.json();
+  renderProducts(products);
+}
+
+function renderProducts(list) {
+  const container = document.getElementById("catalog");
+  container.innerHTML = "";
+
+  list.forEach(p => {
+    container.innerHTML += `
+      <div class="card">
+        <h3>${p.name}</h3>
+        <p>${p.category}</p>
+        <p>₹${p.price}</p>
+        <button onclick="addToCart('${p._id}')">Add to Cart</button>
+      </div>
+    `;
+  });
+}
+
+function addToCart(id) {
+  const product = products.find(p => p._id === id);
+  cart.push(product);
+  localStorage.setItem("cart", JSON.stringify(cart));
+  renderCart();
+}
+
+function renderCart() {
+  const container = document.getElementById("cartItems");
+  const totalEl = document.getElementById("total");
+
+  container.innerHTML = "";
+  let total = 0;
+
+  cart.forEach(item => {
+    total += item.price;
+    container.innerHTML += `<p>${item.name} - ₹${item.price}</p>`;
+  });
+
+  totalEl.innerText = total;
+}
+
+document.getElementById("search").addEventListener("input", e => {
+  const term = e.target.value.toLowerCase();
+  const filtered = products.filter(p =>
+    p.name.toLowerCase().includes(term)
+  );
+  renderProducts(filtered);
+});
+
+async function checkout() {
+  const name = document.getElementById("name").value;
+  const email = document.getElementById("email").value;
+  const address = document.getElementById("address").value;
+
+  await fetch("/api/orders", {
+    method: "POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({ name, email, address, items: cart })
+  });
+
+  cart = [];
+  localStorage.removeItem("cart");
+  renderCart();
+  alert("Order placed successfully!");
+}
+
+fetchProducts();
+renderCart();
+</script>
+
+</body>
+</html>
