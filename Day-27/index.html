@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Shop API</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<h1>🛒 Shop Manager API Client</h1>
+
+<h2>Add Product</h2>
+<input id="name" placeholder="Name">
+<input id="price" placeholder="Price">
+<input id="stock" placeholder="Stock">
+<button onclick="addProduct()">Add</button>
+
+<h2>Products</h2>
+<div id="products"></div>
+
+<script>
+async function loadProducts() {
+  const res = await fetch("/products");
+  const data = await res.json();
+
+  const container = document.getElementById("products");
+  container.innerHTML = "";
+
+  data.forEach(p => {
+    container.innerHTML += `
+      <div>
+        <b>${p.name}</b> | ₹${p.price} | Stock: ${p.stock}
+        <button onclick="deleteProduct('${p._id}')">Delete</button>
+        <button onclick="updateStock('${p._id}')">+1 Stock</button>
+      </div>
+    `;
+  });
+}
+
+async function addProduct() {
+  const name = document.getElementById("name").value;
+  const price = document.getElementById("price").value;
+  const stock = document.getElementById("stock").value;
+
+  await fetch("/products", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name, price, stock })
+  });
+
+  loadProducts();
+}
+
+async function deleteProduct(id) {
+  await fetch("/products/" + id, { method: "DELETE" });
+  loadProducts();
+}
+
+async function updateStock(id) {
+  await fetch("/products/" + id, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ stock: 1 })  // increment by 1 logic handled backend
+  });
+
+  loadProducts();
+}
+
+loadProducts();
+</script>
+
+</body>
+</html>
