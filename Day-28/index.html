@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Atlas Shop Manager</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<h1>🌍 Atlas Shop Manager</h1>
+
+<div class="form">
+  <input id="name" placeholder="Product Name">
+  <input id="price" placeholder="Price">
+  <input id="stock" placeholder="Stock">
+  <button onclick="addProduct()">Add Product</button>
+</div>
+
+<h2>Products</h2>
+<div id="products"></div>
+
+<script>
+async function loadProducts() {
+  const res = await fetch("/products");
+  const data = await res.json();
+
+  const container = document.getElementById("products");
+  container.innerHTML = "";
+
+  data.forEach(p => {
+    container.innerHTML += `
+      <div class="card">
+        <h3>${p.name}</h3>
+        <p>Price: ₹${p.price}</p>
+        <p>Stock: ${p.stock}</p>
+        <button onclick="increaseStock('${p._id}')">+1</button>
+        <button onclick="deleteProduct('${p._id}')">Delete</button>
+      </div>
+    `;
+  });
+}
+
+async function addProduct() {
+  const name = document.getElementById("name").value;
+  const price = document.getElementById("price").value;
+  const stock = document.getElementById("stock").value;
+
+  await fetch("/products", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name, price, stock })
+  });
+
+  loadProducts();
+}
+
+async function increaseStock(id) {
+  await fetch("/products/" + id, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ stock: 1 })
+  });
+
+  loadProducts();
+}
+
+async function deleteProduct(id) {
+  await fetch("/products/" + id, {
+    method: "DELETE"
+  });
+
+  loadProducts();
+}
+
+loadProducts();
+</script>
+
+</body>
+</html>
